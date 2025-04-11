@@ -56,4 +56,4 @@ To run the project locally:
    ```bash
    git clone https://github.com/stre4k/pykemon.git
    cd pykemon
-
+   ```
