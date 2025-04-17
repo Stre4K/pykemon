@@ -1,0 +1,3 @@
+Fireball,15,Fire
+Water Blast,12,Water
+Leaf Whip,10,Grass
