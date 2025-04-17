@@ -8,6 +8,7 @@ ELEMENTAL_EFFECTIVENESS = {
     ("Fire", "Water"): 0.5,
     ("Water", "Grass"): 0.5,
     ("Grass", "Fire"): 0.5,
+
 }
 
 class Pykemon:
