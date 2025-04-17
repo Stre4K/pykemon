@@ -2,7 +2,7 @@ from load_spells import load_spells_from_file
 from pykemon import Pykemon
 
 # Load all spells from file
-all_spells = load_spells_from_file("../DOCS/spells.txt")
+all_spells = load_spells_from_file("../docs/spells.txt")
 
 # Create Pykemon
 charmander = Pykemon("Charmander", "Fire", defense=25, attack=35)
