@@ -24,19 +24,19 @@ class Pykemon:
         self.experience = 0
         self.spells = []
 
-    def take_damage(self, spell, attacker):
+    def attack_other(self, spell, other):
         # Determine elemental multiplier
-        elemental_multiplier = ELEMENTAL_EFFECTIVENESS.get((spell.spell_type, self.type), 1.0)
+        elemental_multiplier = ELEMENTAL_EFFECTIVENESS.get((spell.spell_type, other.type), 1.0)
 
         # Apply pykemon attack multiplier, elemental multiplier and defense scaling
-        base_damage = spell.power * (attacker.attack / 100)
+        base_damage = spell.power * (self.attack / 100)
         raw_damage = base_damage * elemental_multiplier
-        reduced_damage = raw_damage * (1 - self.defense / 100)
+        reduced_damage = raw_damage * (1 - other.defense / 100)
         damage = max(0, int(reduced_damage))
 
-        self.current_hp = max(0, self.current_hp - damage)
+        other.current_hp = max(0, other.current_hp - damage)
 
-        print(f"{self.name} took {damage} damage from {spell.name}!")
+        print(f"{self.name} dealt {damage} damage to {other.name}!")
 
         if elemental_multiplier > 1:
             print("It's super effective!")
@@ -45,10 +45,6 @@ class Pykemon:
 
     def is_fainted(self):
         return self.current_hp <= 0
-
-    def attack_other(self, other):
-        print(f"{self.name} attacks {other.name}!")
-        other.take_damage(self.attack)
 
     def heal(self):
         self.current_hp = self.max_hp
@@ -88,7 +84,7 @@ class Pykemon:
         elif multiplier < 1:
             print("It's not very effective...")
 
-        other.take_damage(spell, other)
+        self.attack_other(spell, other)
 
     def __str__(self):
         return f"{self.name} (Lv. {self.level}, Type: {self.type}) - HP: {self.current_hp}/{self.max_hp}"
