@@ -86,5 +86,8 @@ class Pykemon:
 
         self.attack_other(spell, other)
 
+    def reset(self):
+        self.current_hp = self.max_hp
+
     def __str__(self):
         return f"{self.name} (Lv. {self.level}, Type: {self.type}) - HP: {self.current_hp}/{self.max_hp}"
