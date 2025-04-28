@@ -1,3 +1,13 @@
 Fireball,15,Fire
 Water Blast,12,Water
 Leaf Whip,10,Grass
+Flame Charge,18,Fire
+Aqua Jet,14,Water
+Vine Lash,11,Grass
+Inferno,25,Fire
+Hydro Pump,22,Water
+Solar Beam,20,Grass
+Ember,10,Fire
+Bubble Beam,13,Water
+Razor Leaf,12,Grass
+
