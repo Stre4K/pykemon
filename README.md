@@ -57,3 +57,14 @@ To run the project locally:
    git clone https://github.com/stre4k/pykemon.git
    cd pykemon
    ```
+2. Run the server:
+   ```bash
+   cd src
+   python3 server.py
+   ```
+3. Run the client:
+   ```bash
+   python3 client.py
+   ```
+4. Connect to the server and start playing!
+   Locally use `localhost` or `127.0.0.1` to connect to the server.
