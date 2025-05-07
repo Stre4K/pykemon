@@ -7,47 +7,57 @@ PORT = 65432
 
 def game_loop(conn, player1, player2):
     while player1.current_hp > 0 and player2.current_hp > 0:
-        print("\nYour turn to choose a spell!")
-        spell1 = utils.choose_spell(player1)  # Player 1 input
+        print(f"\n{utils.BOLD}--- New Turn ---{utils.RESET}")
+        print(f"{player1.name}: {utils.render_hp_bar(player1.current_hp, player1.max_hp)}")
+        print(f"{player2.name}: {utils.render_hp_bar(player2.current_hp, player2.max_hp)}\n")
 
+        print("Your turn to choose a spell!")
+        spell1 = utils.choose_spell(player1)
+
+        # Send signal to client it's their turn
+        conn.sendall(b'YOUR_TURN')
+
+        # Receive spell from client
         print("\nWaiting for Player 2 to choose a spell...")
-        spell2 = pickle.loads(conn.recv(4096))  # Wait for Player 2
+        spell2 = pickle.loads(conn.recv(4096))
 
-        # Now both players have chosen!
-
-        # Determine who is faster
+        # Determine turn order
         if player1.speed >= player2.speed:
             first, first_spell, second, second_spell = player1, spell1, player2, spell2
         else:
             first, first_spell, second, second_spell = player2, spell2, player1, spell1
 
-        print(f"Player2's known spells: {[s.name for s in player2.spells]}")
-        print(f"Received spell from Player2: {spell2.name}")
-        print(f"Spell match found: {spell2 in player2.spells}")
-
         # First attack
         print(f"\n{first.name} attacks first!")
         first.cast_spell(first_spell, second)
-        conn.sendall(pickle.dumps({'attacker': first.name, 'spell': first_spell.name, 'target': second.name, 'target_hp': second.current_hp}))
 
-        # Check if second is knocked out
         if second.current_hp <= 0:
             break
 
         # Second attack
         print(f"\n{second.name} attacks second!")
         second.cast_spell(second_spell, first)
-        conn.sendall(pickle.dumps({'attacker': second.name, 'spell': second_spell.name, 'target': first.name, 'target_hp': first.current_hp}))
 
-    # Game over
+        # Send updated states of both players to client
+        conn.sendall(pickle.dumps({
+            'attacks': [
+                {'attacker': first.name, 'spell': first_spell.name, 'target': second.name, 'target_hp': second.current_hp},
+                {'attacker': second.name, 'spell': second_spell.name, 'target': first.name, 'target_hp': first.current_hp}
+            ],
+            'player1': player1,
+            'player2': player2
+        }))
+
+    # Game over message
     if player1.current_hp <= 0 and player2.current_hp <= 0:
-        print(f"{utils.YELLOW}It's a draw!{utils.RESET}")
+        result_msg = f"{utils.YELLOW}It's a draw!{utils.RESET}"
     elif player2.current_hp <= 0:
-        print(f"{utils.GREEN}You win!{utils.RESET}")
+        result_msg = f"{utils.GREEN}You win!{utils.RESET}"
     else:
-        print(f"{utils.RED}You lose!{utils.RESET}")
-    conn.sendall(b'GAMEOVER')
+        result_msg = f"{utils.RED}You lose!{utils.RESET}"
 
+    print(result_msg)
+    conn.sendall(b'GAMEOVER')
 
 def server():
     # Set up Pykemon
@@ -65,6 +75,11 @@ def server():
 
     # Send Pokémon list to Player 2
     conn.sendall(pickle.dumps(pykemon_list))
+
+    # Send Pokémon to Player 2
+    conn.sendall(pickle.dumps(player1))
+
+    # Receive Pokémon from Player 2
     player2 = pickle.loads(conn.recv(4096))
 
     print(f"{utils.CYAN}Your opponent chose {player2.name}!{utils.RESET}")

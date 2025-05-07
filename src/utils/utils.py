@@ -70,3 +70,16 @@ def load_spells_from_file(filename):
                 print(f"Error parsing spell line: {line}")
     return spells
 
+def render_hp_bar(current, maximum, length=20):
+    ratio = current / maximum
+    filled_length = int(length * ratio)
+    bar = '█' * filled_length + '-' * (length - filled_length)
+
+    if ratio > 0.5:
+        color = GREEN
+    elif ratio > 0.2:
+        color = YELLOW
+    else:
+        color = RED
+
+    return f"{color}[{bar}] {current}/{maximum} HP{RESET}"
