@@ -1,45 +1,14 @@
 import socket
 import pickle
-from load_spells import load_spells_from_file
-from pykemon import Pykemon
-
-# Colors
-RED = "\033[91m"
-GREEN = "\033[92m"
-YELLOW = "\033[93m"
-CYAN = "\033[96m"
-RESET = "\033[0m"
-BOLD = "\033[1m"
+import utils
 
 HOST = '0.0.0.0'
 PORT = 65432
 
-def choose_pokemon(pokemon_list):
-    print(f"{BOLD}Choose your Pokémon:{RESET}")
-    for idx, p in enumerate(pokemon_list):
-        print(f"{idx + 1}. {p.name} (Type: {p.type})")
-    while True:
-        choice = input("Enter the number of your choice: ")
-        if choice.isdigit() and 1 <= int(choice) <= len(pokemon_list):
-            return pokemon_list[int(choice) - 1]
-        else:
-            print(f"{YELLOW}Invalid choice. Try again.{RESET}")
-
-def choose_spell(pokemon):
-    print(f"\n{BOLD}{pokemon.name}'s Spells:{RESET}")
-    for idx, spell in enumerate(pokemon.spells):
-        print(f"{idx + 1}. {spell.name} (Type: {spell.spell_type}, Power: {spell.power})")
-    while True:
-        choice = input("Choose a spell: ")
-        if choice.isdigit() and 1 <= int(choice) <= len(pokemon.spells):
-            return pokemon.spells[int(choice) - 1]
-        else:
-            print(f"{YELLOW}Invalid choice. Try again.{RESET}")
-
 def game_loop(conn, player1, player2):
     while player1.current_hp > 0 and player2.current_hp > 0:
         print("\nYour turn to choose a spell!")
-        spell1 = choose_spell(player1)  # Player 1 input
+        spell1 = utils.choose_spell(player1)  # Player 1 input
 
         print("\nWaiting for Player 2 to choose a spell...")
         spell2 = pickle.loads(conn.recv(4096))  # Wait for Player 2
@@ -68,49 +37,38 @@ def game_loop(conn, player1, player2):
 
     # Game over
     if player1.current_hp <= 0 and player2.current_hp <= 0:
-        print(f"{YELLOW}It's a draw!{RESET}")
+        print(f"{utils.YELLOW}It's a draw!{utils.RESET}")
     elif player2.current_hp <= 0:
-        print(f"{GREEN}You win!{RESET}")
+        print(f"{utils.GREEN}You win!{utils.RESET}")
     else:
-        print(f"{RED}You lose!{RESET}")
+        print(f"{utils.RED}You lose!{utils.RESET}")
     conn.sendall(b'GAMEOVER')
 
 
 def server():
-    # Setup Pokémon
-    all_spells = load_spells_from_file("../docs/spells.txt")
-    charmander = Pykemon("Charmander", "Fire", defense=25, attack=35, speed=40)
-    squirtle = Pykemon("Squirtle", "Water", defense=30, attack=30, speed=30)
-    bulbasaur = Pykemon("Bulbasaur", "Grass", defense=35, attack=25, speed=35)
-    for spell in all_spells:
-        if spell.spell_type == "Fire":
-            charmander.learn_spell(spell)
-        elif spell.spell_type == "Water":
-            squirtle.learn_spell(spell)
-        elif spell.spell_type == "Grass":
-            bulbasaur.learn_spell(spell)
+    # Set up Pykemon
+    pykemon_list = utils.setup_pykemon()
 
-    pokemon_list = [charmander, squirtle, bulbasaur]
-
-    print(f"{BOLD}Waiting for player 2 to connect...{RESET}")
+    print(f"{utils.BOLD}Waiting for player 2 to connect...{utils.RESET}")
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind((HOST, PORT))
     server.listen()
     conn, addr = server.accept()
-    print(f"{GREEN}Player 2 connected from {addr}{RESET}")
+    print(f"{utils.GREEN}Player 2 connected from {addr}{utils.RESET}")
 
     # Player 1 picks Pokémon
-    player1 = choose_pokemon(pokemon_list)
+    player1 = utils.choose_pokemon(pykemon_list)
 
     # Send Pokémon list to Player 2
-    conn.sendall(pickle.dumps(pokemon_list))
+    conn.sendall(pickle.dumps(pykemon_list))
     player2 = pickle.loads(conn.recv(4096))
 
-    for spell in all_spells:
-        if spell.spell_type == player2.type:
-            player2.learn_spell(spell)
+    #for spell in all_spells:
+    #    if spell.spell_type == player2.type:
+    #        player2.learn_spell(spell)
 
-    print(f"{CYAN}Your opponent chose {player2.name}!{RESET}")
+    print(f"{utils.CYAN}Your opponent chose {player2.name}!{utils.RESET}")
+    print(player2.spells)
 
     # Reset HP
     player1.reset()

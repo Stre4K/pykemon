@@ -1,44 +1,20 @@
 import socket
 import pickle
-from load_spells import load_spells_from_file
-from pykemon import Pykemon
+import utils
 
 # Colors
-RED = "\033[91m"
-GREEN = "\033[92m"
-YELLOW = "\033[93m"
-CYAN = "\033[96m"
-RESET = "\033[0m"
-BOLD = "\033[1m"
+RED = utils.RED
+GREEN = utils.GREEN
+YELLOW = utils.YELLOW
+CYAN = utils.CYAN
+RESET = utils.RESET
+BOLD = utils.BOLD
 
 PORT = 65432
 
-def choose_pokemon(pokemon_list):
-    print(f"{BOLD}Choose your Pokémon:{RESET}")
-    for idx, p in enumerate(pokemon_list):
-        print(f"{idx + 1}. {p.name} (Type: {p.type})")
-    while True:
-        choice = input("Enter the number of your choice: ")
-        if choice.isdigit() and 1 <= int(choice) <= len(pokemon_list):
-            return pokemon_list[int(choice) - 1]
-        else:
-            print(f"{YELLOW}Invalid choice. Try again.{RESET}")
-
-
-def choose_spell(pokemon):
-    print(f"\n{BOLD}{pokemon.name}'s Spells:{RESET}")
-    for idx, spell in enumerate(pokemon.spells):
-        print(f"{idx + 1}. {spell.name} (Type: {spell.spell_type}, Power: {spell.power})")
-    while True:
-        choice = input("Choose a spell: ")
-        if choice.isdigit() and 1 <= int(choice) <= len(pokemon.spells):
-            return pokemon.spells[int(choice) - 1]
-        else:
-            print(f"{YELLOW}Invalid choice. Try again.{RESET}")
-
 def game_loop(conn, player1, player2):
     while True:
-        spell = choose_spell(player2)
+        spell = utils.choose_spell(player2)
         conn.sendall(pickle.dumps(spell))
 
         data = conn.recv(4096)
@@ -58,11 +34,7 @@ def client():
     pokemon_list = pickle.loads(data)
 
     # Pick Pokémon
-    player2 = choose_pokemon(pokemon_list)
-    #all_spells = load_spells_from_file("../docs/spells.txt")
-    #for spell in all_spells:
-    #    if spell.spell_type == player1.type:
-    #        player1.learn_spell(spell)
+    player2 = utils.choose_pokemon(pokemon_list)
 
 
     client.sendall(pickle.dumps(player2))
