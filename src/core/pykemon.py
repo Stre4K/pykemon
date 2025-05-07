@@ -1,4 +1,4 @@
-from spell import Spell
+from core.spell import Spell
 
 # Simple elemental advantage system
 ELEMENTAL_EFFECTIVENESS = {
