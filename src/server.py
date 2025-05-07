@@ -76,7 +76,7 @@ def game_loop(conn, player1, player2):
     conn.sendall(b'GAMEOVER')
 
 
-def main():
+def server():
     # Setup Pokémon
     all_spells = load_spells_from_file("../docs/spells.txt")
     charmander = Pykemon("Charmander", "Fire", defense=25, attack=35, speed=40)
@@ -117,5 +117,5 @@ def main():
     conn.close()
 
 if __name__ == "__main__":
-    main()
+    server()
 
