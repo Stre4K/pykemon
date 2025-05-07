@@ -1,13 +1,13 @@
-from load_spells import load_spells_from_file
+import utils
 from pykemon import Pykemon  # after you renamed!
 
 # Colors
-RED = "\033[91m"
-GREEN = "\033[92m"
-YELLOW = "\033[93m"
-CYAN = "\033[96m"
-RESET = "\033[0m"
-BOLD = "\033[1m"
+RED = utils.RED
+GREEN = utils.GREEN
+YELLOW = utils.YELLOW
+CYAN = utils.CYAN
+RESET = utils.RESET
+BOLD = utils.BOLD
 
 def safe_input(prompt, options):
     while True:
@@ -82,7 +82,7 @@ def main():
 
     while playing:
         # Load all spells from file
-        all_spells = load_spells_from_file("../docs/spells.txt")
+        all_spells = utils.load_spells_from_file("../docs/spells.txt")
 
         # Create Pykemon
         charmander = Pykemon("Charmander", "Fire", defense=25, attack=35, speed=40)
