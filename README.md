@@ -57,14 +57,30 @@ To run the project locally:
    git clone https://github.com/stre4k/pykemon.git
    cd pykemon
    ```
-2. Run the server:
+
+2. Navigate to the `src/` directory:
    ```bash
    cd src
-   python3 server.py
    ```
-3. Run the client:
+
+3. Start the game using the main entry point:
    ```bash
-   python3 client.py
+   python3 start.py
    ```
-4. Connect to the server and start playing!
-   Locally use `localhost` or `127.0.0.1` to connect to the server.
+
+4. You will be prompted to:
+   - Enter `1` to **host a game** (run as server), or
+   - Enter `2` to **join a game** (run as client) and provide a valid IP address to connect to the host. (127.0.0.1 or localhost)
+
+> ⚠️ **Warning:** Multiplayer mode is currently unstable and may contain bugs. Use with caution!
+
+---
+
+### 🧪 Local Testing
+
+If you'd prefer to run a local single-player variant (for testing or debugging), you can launch the game logic directly:
+
+```bash
+python3 main.py
+```
+
