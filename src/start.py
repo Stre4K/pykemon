@@ -1,6 +1,6 @@
 # main.py
-from server import server
-from client import client
+from server.server import server
+from client.client import client
 
 def main():
     print("Welcome to Pykemon Battle!")

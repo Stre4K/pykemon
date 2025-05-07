@@ -1,6 +1,6 @@
 # utils.py
-from pykemon import Pykemon
-from spell import Spell
+from core.pykemon import Pykemon
+from core.spell import Spell
 
 # Colors
 RED = "\033[91m"
@@ -49,8 +49,6 @@ def setup_pykemon():
 
     return pykemon_list
 
-
-from spell import Spell
 
 def load_spells_from_file(filename):
     spells = []

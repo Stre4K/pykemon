@@ -1,6 +1,6 @@
 import socket
 import pickle
-import utils
+from utils import utils
 
 # Colors
 RED = utils.RED
