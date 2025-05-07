@@ -11,7 +11,6 @@ CYAN = "\033[96m"
 RESET = "\033[0m"
 BOLD = "\033[1m"
 
-HOST = input("Enter server IP address: ")  # Example: 192.168.1.5
 PORT = 65432
 
 def choose_pokemon(pokemon_list):
@@ -24,6 +23,7 @@ def choose_pokemon(pokemon_list):
             return pokemon_list[int(choice) - 1]
         else:
             print(f"{YELLOW}Invalid choice. Try again.{RESET}")
+
 
 def choose_spell(pokemon):
     print(f"\n{BOLD}{pokemon.name}'s Spells:{RESET}")
@@ -47,7 +47,9 @@ def game_loop(conn, player1, player2):
         update = pickle.loads(data)
         print(f"{CYAN}{update['attacker']} used {update['spell']} on {update['target']}! {update['target']} HP is now {update['target_hp']}.{RESET}")
 
-def main():
+def client():
+
+    HOST = input("Enter server IP address: ")  # Example: 192.168.1.5
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect((HOST, PORT))
 
@@ -57,6 +59,12 @@ def main():
 
     # Pick Pokémon
     player2 = choose_pokemon(pokemon_list)
+    #all_spells = load_spells_from_file("../docs/spells.txt")
+    #for spell in all_spells:
+    #    if spell.spell_type == player1.type:
+    #        player1.learn_spell(spell)
+
+
     client.sendall(pickle.dumps(player2))
 
     player1 = None  # Server player
@@ -68,5 +76,5 @@ def main():
     print(f"{YELLOW}Game over!{RESET}")
 
 if __name__ == "__main__":
-    main()
+    client()
 
