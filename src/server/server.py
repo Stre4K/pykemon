@@ -21,6 +21,10 @@ def game_loop(conn, player1, player2):
         else:
             first, first_spell, second, second_spell = player2, spell2, player1, spell1
 
+        print(f"Player2's known spells: {[s.name for s in player2.spells]}")
+        print(f"Received spell from Player2: {spell2.name}")
+        print(f"Spell match found: {spell2 in player2.spells}")
+
         # First attack
         print(f"\n{first.name} attacks first!")
         first.cast_spell(first_spell, second)
@@ -63,10 +67,6 @@ def server():
     conn.sendall(pickle.dumps(pykemon_list))
     player2 = pickle.loads(conn.recv(4096))
 
-    #for spell in all_spells:
-    #    if spell.spell_type == player2.type:
-    #        player2.learn_spell(spell)
-
     print(f"{utils.CYAN}Your opponent chose {player2.name}!{utils.RESET}")
     print(player2.spells)
 
@@ -78,6 +78,6 @@ def server():
 
     conn.close()
 
+
 if __name__ == "__main__":
     server()
-
