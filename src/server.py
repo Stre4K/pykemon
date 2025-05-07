@@ -106,6 +106,10 @@ def server():
     conn.sendall(pickle.dumps(pokemon_list))
     player2 = pickle.loads(conn.recv(4096))
 
+    for spell in all_spells:
+        if spell.spell_type == player2.type:
+            player2.learn_spell(spell)
+
     print(f"{CYAN}Your opponent chose {player2.name}!{RESET}")
 
     # Reset HP
