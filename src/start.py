@@ -1,8 +1,11 @@
 # main.py
 from server.server import server
 from client.client import client
+from utils.utils import show_splash
 
 def main():
+    show_splash()
+
     print("Welcome to Pykemon Battle!")
     print("1. Host Game (Server)")
     print("2. Join Game (Client)")
