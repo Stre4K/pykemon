@@ -1,6 +1,6 @@
 # utils.py
-from core.pykemon import Pykemon
-from core.spell import Spell
+from src.core.pykemon import Pykemon
+from src.core.spell import Spell
 
 # Colors
 RED = "\033[91m"
