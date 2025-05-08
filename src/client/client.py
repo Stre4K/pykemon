@@ -37,6 +37,7 @@ def game_loop(conn, player1, player2):
         update = pickle.loads(data)
 
         # First attack
+        print("\n")
         update['firstAttacker'].cast_spell(update['firstSpell'], update['secondAttacker'], False)
         print("\n")
         time.sleep(1)

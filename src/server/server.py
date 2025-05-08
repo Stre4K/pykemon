@@ -38,6 +38,7 @@ def game_loop(conn, player1, player2):
         }))
 
         # First attack
+        print("\n")
         first.cast_spell(first_spell, second, True)
         print("\n")
         time.sleep(1)
