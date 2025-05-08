@@ -1,5 +1,6 @@
 import utils
-from pykemon import Pykemon  # after you renamed!
+from utils import utils
+from core.pykemon import Pykemon  # after you renamed!
 
 # Colors
 RED = utils.RED

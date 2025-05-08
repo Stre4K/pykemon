@@ -1,6 +1,6 @@
 import socket
 import pickle
-from utils import utils
+from src.utils import utils
 
 HOST = '0.0.0.0'
 PORT = 65432
