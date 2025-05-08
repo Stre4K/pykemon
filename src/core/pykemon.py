@@ -69,7 +69,7 @@ class Pykemon:
             print(f"{self.name} doesn't know {spell.name}!")
             return
 
-        utils.print_each_char(f"{self.name} casts {spell.name} on {other.name}!\n")
+        utils.print_each_char(f"{utils.CYAN}{self.name} casts {spell.name} on {other.name}!{utils.RESET}\n")
 
         multiplier = ELEMENTAL_EFFECTIVENESS.get((spell.spell_type, other.type), 1.0)
 
