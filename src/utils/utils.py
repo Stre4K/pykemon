@@ -36,7 +36,7 @@ def choose_spell(pykemon):
             print(f"{YELLOW}Invalid choice. Try again.{RESET}")
 
 def setup_pykemon():
-    all_spells = load_spells_from_file("../../docs/spells.txt")
+    all_spells = load_spells_from_file("../docs/spells.txt")
     charmander = Pykemon("Charmander", "Fire", defense=25, attack=90, speed=40, max_hp=50)
     squirtle = Pykemon("Squirtle", "Water", defense=30, attack=80, speed=30, max_hp=55)
     bulbasaur = Pykemon("Bulbasaur", "Grass", defense=35, attack=70, speed=35, max_hp=60)
