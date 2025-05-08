@@ -1,4 +1,5 @@
 from src.core.spell import Spell
+from src.utils import utils
 
 # Simple elemental advantage system
 ELEMENTAL_EFFECTIVENESS = {
@@ -31,17 +32,10 @@ class Pykemon:
         # Apply pykemon attack multiplier, elemental multiplier and defense scaling
         base_damage = spell.power * (self.attack / 100)
         raw_damage = base_damage * elemental_multiplier
-        reduced_damage = raw_damage * (1 - other.defense / 100)
-        damage = max(0, int(reduced_damage))
+        reduced_damage = raw_damage * (1 - (other.defense / 100))
+        damage = max(1, int(reduced_damage))
 
         other.current_hp = max(0, other.current_hp - damage)
-
-        print(f"{self.name} dealt {damage} damage to {other.name}!")
-
-        if elemental_multiplier > 1:
-            print("It's super effective!")
-        elif elemental_multiplier < 1:
-            print("It's not very effective...")
 
     def is_fainted(self):
         return self.current_hp <= 0
@@ -70,21 +64,22 @@ class Pykemon:
         self.spells.append(spell)
         print(f"{self.name} learned {spell.name}!")
 
-    def cast_spell(self, spell, other):
+    def cast_spell(self, spell, other, server):
         if spell not in self.spells:
             print(f"{self.name} doesn't know {spell.name}!")
             return
 
-        print(f"{self.name} casts {spell.name} on {other.name}!")
+        utils.print_each_char(f"{self.name} casts {spell.name} on {other.name}!\n")
 
         multiplier = ELEMENTAL_EFFECTIVENESS.get((spell.spell_type, other.type), 1.0)
 
         if multiplier > 1:
-            print("It's super effective!")
+            utils.print_each_char("It's super effective!")
         elif multiplier < 1:
-            print("It's not very effective...")
+            utils.print_each_char("It's not very effective...")
 
-        self.attack_other(spell, other)
+        if server:
+            self.attack_other(spell, other)
 
     def reset(self):
         self.current_hp = self.max_hp

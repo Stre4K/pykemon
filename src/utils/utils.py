@@ -1,4 +1,5 @@
 # utils.py
+import time
 from src.core.pykemon import Pykemon
 from src.core.spell import Spell
 
@@ -7,36 +8,38 @@ RED = "\033[91m"
 GREEN = "\033[92m"
 YELLOW = "\033[93m"
 CYAN = "\033[96m"
+GRAY   = "\033[90m"
 RESET = "\033[0m"
 BOLD = "\033[1m"
+ITALIC = "\033[3m"
 
-def choose_pokemon(pokemon_list):
-    print(f"{BOLD}Choose your Pokémon:{RESET}")
-    for idx, p in enumerate(pokemon_list):
+def choose_pokemon(pykemon_list):
+    print(f"{BOLD}Choose your Pykemon:{RESET}")
+    for idx, p in enumerate(pykemon_list):
         print(f"{idx + 1}. {p.name} (Type: {p.type})")
     while True:
         choice = input("Enter the number of your choice: ")
-        if choice.isdigit() and 1 <= int(choice) <= len(pokemon_list):
-            return pokemon_list[int(choice) - 1]
+        if choice.isdigit() and 1 <= int(choice) <= len(pykemon_list):
+            return pykemon_list[int(choice) - 1]
         else:
             print(f"{YELLOW}Invalid choice. Try again.{RESET}")
 
-def choose_spell(pokemon):
-    print(f"\n{BOLD}{pokemon.name}'s Spells:{RESET}")
-    for idx, spell in enumerate(pokemon.spells):
+def choose_spell(pykemon):
+    print(f"\n{BOLD}{pykemon.name}'s Spells:{RESET}")
+    for idx, spell in enumerate(pykemon.spells):
         print(f"{idx + 1}. {spell.name} (Type: {spell.spell_type}, Power: {spell.power})")
     while True:
         choice = input("Choose a spell: ")
-        if choice.isdigit() and 1 <= int(choice) <= len(pokemon.spells):
-            return pokemon.spells[int(choice) - 1]
+        if choice.isdigit() and 1 <= int(choice) <= len(pykemon.spells):
+            return pykemon.spells[int(choice) - 1]
         else:
             print(f"{YELLOW}Invalid choice. Try again.{RESET}")
 
 def setup_pykemon():
-    all_spells = load_spells_from_file("../docs/spells.txt")
-    charmander = Pykemon("Charmander", "Fire", defense=25, attack=35, speed=40)
-    squirtle = Pykemon("Squirtle", "Water", defense=30, attack=30, speed=30)
-    bulbasaur = Pykemon("Bulbasaur", "Grass", defense=35, attack=25, speed=35)
+    all_spells = load_spells_from_file("../../docs/spells.txt")
+    charmander = Pykemon("Charmander", "Fire", defense=25, attack=90, speed=40, max_hp=50)
+    squirtle = Pykemon("Squirtle", "Water", defense=30, attack=80, speed=30, max_hp=55)
+    bulbasaur = Pykemon("Bulbasaur", "Grass", defense=35, attack=70, speed=35, max_hp=60)
     for spell in all_spells:
         if spell.spell_type == "Fire":
             charmander.learn_spell(spell)
@@ -69,6 +72,13 @@ def load_spells_from_file(filename):
             except ValueError:
                 print(f"Error parsing spell line: {line}")
     return spells
+
+def print_each_char(text):
+    for char in text:
+        print(char, end="")
+        time.sleep(0.04)
+
+
 
 def render_hp_bar(current, maximum, length=20):
     ratio = current / maximum
