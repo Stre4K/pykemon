@@ -64,7 +64,7 @@ class Pykemon:
         self.spells.append(spell)
         print(f"{self.name} learned {spell.name}!")
 
-    def cast_spell(self, spell, other, server):
+    def cast_spell(self, spell, other, is_server):
         if spell not in self.spells:
             print(f"{self.name} doesn't know {spell.name}!")
             return
@@ -78,7 +78,7 @@ class Pykemon:
         elif multiplier < 1:
             utils.print_each_char("It's not very effective...")
 
-        if server:
+        if is_server:
             self.attack_other(spell, other)
 
     def reset(self):
