@@ -2,7 +2,7 @@ import socket
 import pickle
 import time
 
-from src.utils import utils
+from utils import utils
 
 HOST = '0.0.0.0'
 PORT = 65432
