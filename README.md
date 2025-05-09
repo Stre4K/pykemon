@@ -69,7 +69,7 @@ To run the project locally:
 
 4. You will be prompted to:
    - Enter `1` to **host a game** (run as server), or
-   - Enter `2` to **join a game** (run as client) and provide a valid IP address to connect to the host. (example: 127.0.0.1 or localhost)
+   - Enter `2` to **join a game** (run as client) and provide a valid IP address to connect to the host. (For example, use 127.0.0.1 or localhost to connect to the local machine).
 
 > ⚠️ **Warning:** Multiplayer mode is currently unstable and may contain bugs. Use with caution!
 
