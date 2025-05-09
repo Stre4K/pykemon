@@ -16,21 +16,20 @@
 
 ## 🕹️ Current Features
 
-- None
-
-## 🚧 In Development / Planned Features
-
 - Terminal-based interface
 - Basic battle system
 - A few sample Pykémon with unique stats and abilities
 - Turn-based mechanics
+- Player vs Player (PvP) mode
+- Online multiplayer functionality
+
+## 🚧 In Development / Planned Features
+
 - Additional Pykémon types and evolutions
 
 ## 🚀 Possible Future Features
 
-- Player vs Player (PvP) mode
 - Graphical User Interface (possibly with `tkinter`, `pygame`, or another library)
-- Online multiplayer functionality
 - Save/load system for game state
 
 ## 🛠️ Technologies Used
@@ -70,7 +69,7 @@ To run the project locally:
 
 4. You will be prompted to:
    - Enter `1` to **host a game** (run as server), or
-   - Enter `2` to **join a game** (run as client) and provide a valid IP address to connect to the host. (127.0.0.1 or localhost)
+   - Enter `2` to **join a game** (run as client) and provide a valid IP address to connect to the host. (example: 127.0.0.1 or localhost)
 
 > ⚠️ **Warning:** Multiplayer mode is currently unstable and may contain bugs. Use with caution!
 
