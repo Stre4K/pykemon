@@ -53,19 +53,22 @@ def battle_round(player1, player2):
         # If speed is equal, Player 1 goes first
         first, first_spell, second, second_spell = player1, spell1, player2, spell2
 
-    print(f"\n{CYAN}{first.name} is faster and attacks first!{RESET}")
-    first.cast_spell(first_spell, second)
+    first.cast_spell(first_spell, second, True)
+    print("\n")
 
     if second.current_hp > 0:
-        second.cast_spell(second_spell, first)
+        second.cast_spell(second_spell, first, True)
 
 def game_loop(player1, player2):
     while player1.current_hp > 0 and player2.current_hp > 0:
         battle_round(player1, player2)
 
         # Show updated HP after both moves
-        print(f"\n{BOLD}{player1.name} HP: {player1.current_hp}{RESET}")
-        print(f"{BOLD}{player2.name} HP: {player2.current_hp}{RESET}")
+        print(f"\n{utils.BOLD}              --- New Turn ---{utils.RESET}")
+        print(
+            f"{utils.GRAY}{utils.ITALIC}(You){utils.RESET}      {utils.render_hp_bar(player1.current_hp, player1.max_hp)} {utils.BOLD}{player1.name}{utils.RESET}")
+        print(
+            f"{utils.GRAY}{utils.ITALIC}(Opponent){utils.RESET} {utils.render_hp_bar(player2.current_hp, player2.max_hp)} {utils.BOLD}{player2.name}{utils.RESET}\n")
 
         # Check for win
         if player1.current_hp <= 0 and player2.current_hp <= 0:
