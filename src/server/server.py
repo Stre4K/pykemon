@@ -78,7 +78,7 @@ def server():
     print(f"{utils.GREEN}Player 2 connected from {addr}{utils.RESET}\n")
 
     # Player 1 picks Pokémon
-    player1 = utils.choose_pokemon(pykemon_list)
+    player1 = utils.choose_pykemon(pykemon_list)
 
     # Send Pokémon list to Player 2
     conn.sendall(pickle.dumps(pykemon_list))
@@ -87,7 +87,7 @@ def server():
     conn.sendall(pickle.dumps(player1))
 
     # Receive Pokémon from Player 2
-    utils.print_each_char(f"{utils.GRAY}{utils.ITALIC}Waiting for opponent to chose a pokemon...\n{utils.RESET}")
+    utils.print_each_char(f"{utils.GRAY}{utils.ITALIC}Waiting for opponent to chose a pykemon...\n{utils.RESET}")
     player2 = pickle.loads(conn.recv(4096))
 
     utils.print_each_char(f"{utils.CYAN}Your opponent chose {player2.name}!{utils.RESET}\n\n")

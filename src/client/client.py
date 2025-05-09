@@ -73,17 +73,17 @@ def client():
     HOST = input("Enter server IP address: ")  # Example: 192.168.1.5
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect((HOST, PORT))
-    utils.print_each_char(f"{utils.GRAY}{utils.ITALIC}Waiting for opponent to chose a pokemon...\n{utils.RESET}")
+    utils.print_each_char(f"{utils.GRAY}{utils.ITALIC}Waiting for opponent to chose a pykemon...\n{utils.RESET}")
 
     # Receive Pokémon list
     data = client.recv(4096)
-    pokemon_list = pickle.loads(data)
+    pykemon_list = pickle.loads(data)
 
     # Receive Player1 Pokémon
     player1 = pickle.loads(client.recv(4096))
 
     # Pick Pokémon
-    player2 = utils.choose_pokemon(pokemon_list)
+    player2 = utils.choose_pykemon(pykemon_list)
 
 
     client.sendall(pickle.dumps(player2))
