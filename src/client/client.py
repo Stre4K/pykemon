@@ -2,7 +2,7 @@ import socket
 import pickle
 import time
 
-from src.utils import utils
+from utils import utils
 
 # Colors
 RED = utils.RED

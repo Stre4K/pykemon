@@ -1,5 +1,5 @@
-from src.core.spell import Spell
-from src.utils import utils
+from core.spell import Spell
+from utils import utils
 
 # Simple elemental advantage system
 ELEMENTAL_EFFECTIVENESS = {
