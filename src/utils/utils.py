@@ -13,7 +13,7 @@ RESET = "\033[0m"
 BOLD = "\033[1m"
 ITALIC = "\033[3m"
 
-def choose_pokemon(pykemon_list):
+def choose_pykemon(pykemon_list):
     print(f"{BOLD}Choose your Pykemon:{RESET}")
     for idx, p in enumerate(pykemon_list):
         print(f"{idx + 1}. {p.name} (Type: {p.type})")

@@ -24,19 +24,19 @@ def safe_input(prompt, options):
         except ValueError:
             print(f"{YELLOW}Invalid input. Please enter a number.{RESET}")
 
-def choose_pokemon(pokemon_list):
+def choose_pykemon(pykemon_list):
     print(f"{BOLD}Choose your Pokémon:{RESET}")
-    for idx, p in enumerate(pokemon_list):
+    for idx, p in enumerate(pykemon_list):
         print(f"{idx + 1}. {p.name} (Type: {p.type})")
-    choice = safe_input("Enter the number of your choice: ", len(pokemon_list))
-    return pokemon_list[choice]
+    choice = safe_input("Enter the number of your choice: ", len(pykemon_list))
+    return pykemon_list[choice]
 
-def choose_spell(pokemon):
-    print(f"\n{BOLD}{pokemon.name}'s Spells:{RESET}")
-    for idx, spell in enumerate(pokemon.spells):
+def choose_spell(pykemon):
+    print(f"\n{BOLD}{pykemon.name}'s Spells:{RESET}")
+    for idx, spell in enumerate(pykemon.spells):
         print(f"{idx + 1}. {spell.name} (Type: {spell.spell_type}, Power: {spell.power})")
-    choice = safe_input("Choose a spell to cast: ", len(pokemon.spells))
-    return pokemon.spells[choice]
+    choice = safe_input("Choose a spell to cast: ", len(pykemon.spells))
+    return pykemon.spells[choice]
 
 def battle_round(player1, player2):
     print(f"\n{BOLD}{player1.name} and {player2.name} are choosing their spells...{RESET}")
@@ -99,13 +99,13 @@ def main():
             elif spell.spell_type == "Grass":
                 bulbasaur.learn_spell(spell)
 
-        pokemon_list = [charmander, squirtle, bulbasaur]
+        pykemon_list = [charmander, squirtle, bulbasaur]
 
         # Players pick
         print(f"\n{BOLD}Player 1:{RESET}")
-        player1 = choose_pokemon(pokemon_list)
+        player1 = choose_pykemon(pykemon_list)
         print(f"\n{BOLD}Player 2:{RESET}")
-        player2 = choose_pokemon(pokemon_list)
+        player2 = choose_pykemon(pykemon_list)
 
         # Reset HP
         player1.reset()
